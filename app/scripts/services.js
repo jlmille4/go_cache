@@ -1,50 +1,69 @@
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
+.factory('Maps', function() {
+  'use strict';
 
-  // Some fake testing data
-  var chats = [{
+  //the default location of the map
+  var center = {
+    latitude: 28.571369,
+    longitude: -80.649219, 
+  };
+
+  //the map bounds corners
+  var bounds = {
+    northeast: {
+      latitude:   28.673193,  
+      longitude:  -80.504891
+    },
+    southwest: {
+      latitude:   28.403556,
+      longitude:  -80.772682
+    }
+  };
+
+  // the markers
+  var markers = [{ 
     id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
+    name: 'Cache 0',
+    img: 'images/adam.jpg',
+    coords: { 
+      latitude:28.523719,
+      longitude:-80.680414
+    } 
+  },{ 
+    id: 1, 
+    name: 'Cache 1',
+    img: 'images/ben.png',
+    coords: { 
+      latitude:28.522550, 
+      longitude:-80.659343 
+    } 
+  },{ 
+    id: 2, 
+    name: 'Cache 2',
+    img: 'images/max.png',
+    coords: { 
+      latitude:28.524020 , 
+      longitude:-80.644623 
+    } 
   }];
 
+  //add the windowOptions
+  markers.forEach(function(marker) {
+    marker.windowOptions = { visible: false };
+  });
+
+  //wrap it all up
+  var map = {
+    center: center,
+    bounds: bounds,
+    zoom: 12,
+    markers: markers
+  };
+  
   return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
-      }
-      return null;
+    get: function(){
+      return map;
     }
   };
 });
