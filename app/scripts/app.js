@@ -41,18 +41,10 @@ angular.module('goCacheApp', ['uiGmapgoogle-maps','ionic', 'ngRoute'])
     templateUrl: 'templates/tabs.html',
     resolve: {
       cache: 'cache'
-
-
-      /* function(cache) {
-        console.log(cache);
-        return cache;
-      }
-      */
     }
   })
 
   // Each tab has its own nav history stack:
-
   .state('tab.dash', {
     url: '/dash',
     views: {
@@ -94,7 +86,7 @@ angular.module('goCacheApp', ['uiGmapgoogle-maps','ionic', 'ngRoute'])
     })
   ;
   // if none of the above states are matched, use this as the fallback
-  //$urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/dash');
 
 })
 
@@ -106,11 +98,6 @@ angular.module('goCacheApp', ['uiGmapgoogle-maps','ionic', 'ngRoute'])
         libraries: 'weather,geometry,visualization'
     });
 })
-/*
-.configure(function(uiGmapIsReady) {
-
-})
-*/
 ;
 
 

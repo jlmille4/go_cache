@@ -8,21 +8,30 @@
  * Service in the goCacheApp.
  */
 angular.module('goCacheApp')
-  .service('cache', function ($http, $q) {
+  .service('cache', function ($http, $q, $ionicLoading) {
     //self reference
     var self = this;
 
     //loaded data from the server/filesystem
   	var loadedData = [];
+
+    var timeStamp = null;
   
     //returned promise
   	var initialize = $q(function(resolve, reject){
+      //$ionicLoading.show( { template: 'Loading...'});
+
       console.log("initializing...");
       $http.get('resources/caches.json').then(
         function(response) {
-          loadedData = response.data;
-          resolve(self);
-        },
+          //setTimeout(function(){
+            loadedData = response.data;
+            timeStamp = Date.now();
+            //$ionicLoading.hide();
+            resolve(self);
+          //}, 5000);
+
+         },
         function(error){
           reject(null);
         }
@@ -69,12 +78,18 @@ angular.module('goCacheApp')
       return null;
   	};
 
+    var internalGetTimeStamp = function() {
+      return timeStamp;
+    }
+
+
     //public api
     self.getActivity = internalGetActivity;
     self.getCount = internalGetCount;
     self.getCompleted = internalGetCompleted;
     self.getCacheGroups = internalGetCacheGroups;
     self.getCache = internalGetCache;
+    self.getUpdated = internalGetTimeStamp;
 
 
   	return initialize;

@@ -11,6 +11,7 @@ angular.module('goCacheApp')
   .controller('CachedetailCtrl', function ($stateParams, cache) {
     var viewModel = this;
    	var cacheId = $stateParams.cacheId;
+   	
    	viewModel.cache = cache.getCache(cacheId);
 
   });

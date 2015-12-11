@@ -14,5 +14,7 @@ angular.module('goCacheApp')
     //looky looky
     viewModel.activity  =     cache.getActivity();
     viewModel.completed =     cache.getCompleted();
-    viewModel.total     =     cache.getCount();    
+    viewModel.total     =     cache.getCount(); 
+    viewModel.updated   =     cache.getUpdated();  
+
   });
