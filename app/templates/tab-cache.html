@@ -1,0 +1,12 @@
+<ion-view view-title="Caches">
+	<ion-content>
+	<div class="list">
+		<div class="item item-divider" ng-repeat-start="group in viewModel.groups">
+  			{{group.title}}
+  		</div>
+  		<a class="item" ng-repeat-end ng-repeat="cache in group.caches" href="#/tab/cache/{{cache.id}}">
+  			{{cache.title}}
+  		</a>
+	</div>
+	</ion-content>
+</ion-view>

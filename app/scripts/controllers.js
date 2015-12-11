@@ -2,7 +2,7 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 
-.controller('CacheCtrl', function($scope, $stateParams, uiGmapGoogleMapApi, uiGmapIsReady, Maps){
+.controller('CacheCtrl', function($scope, $stateParams, $location, uiGmapGoogleMapApi, uiGmapIsReady, Maps) {
   'use strict';
 
   //the last valid center of map
@@ -96,6 +96,5 @@ angular.module('starter.controllers', [])
 
     marker.windowOptions.visible = !marker.windowOptions.visible;
   };
-
-
-});
+})
+;

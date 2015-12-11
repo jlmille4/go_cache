@@ -51,6 +51,7 @@ angular.module('starter.services', [])
   //add the windowOptions
   markers.forEach(function(marker) {
     marker.windowOptions = { visible: false };
+    marker.short = "Lorem ipsum dolor sit amet";
   });
 
   //wrap it all up
@@ -58,7 +59,8 @@ angular.module('starter.services', [])
     center: center,
     bounds: bounds,
     zoom: 12,
-    markers: markers
+    markers: markers,
+    options: { disableDefaultUI: true }
   };
   
   return {

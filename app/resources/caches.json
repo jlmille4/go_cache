@@ -1,0 +1,38 @@
+[
+	{
+		"id": 0,
+		"title": "Launch Complex 39 Area",
+		"caches": [
+			{
+				"id": 0,
+				"title": "Vehicle Assembly Building",
+				"description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
+				"location": { "latitude": 0, "longitude": 0 }
+			},
+			{
+				"id": 1,
+				"title": "Launch Control Center",
+				"description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
+				"location": { "latitude": 0, "longitude": 0 }	
+			}
+		]
+	},
+	{
+		"id": 1,
+		"title": "Industrial Area",
+		"caches": [
+			{
+				"id": 2,
+				"title": "Space Station Processing Facility",
+				"description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
+				"location": { "latitude": 0, "longitude": 0 }
+			},
+			{
+				"id": 3,
+				"title": "Neil Armstrong Operations and Checkout building",
+				"description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
+				"location": { "latitude": 0, "longitude": 0 }	
+			}
+		]
+	}
+]

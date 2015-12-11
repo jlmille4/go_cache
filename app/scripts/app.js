@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['uiGmapgoogle-maps','ionic', 'starter.controllers', 'starter.services'])
+angular.module('goCacheApp', ['uiGmapgoogle-maps','ionic', 'ngRoute'])
 
 .run(function($ionicPlatform) {
   'use strict';
@@ -25,7 +25,6 @@ angular.module('starter', ['uiGmapgoogle-maps','ionic', 'starter.controllers', '
   });
 })
 
-
 .config(function($stateProvider, $urlRouterProvider) {
   'use strict';
 
@@ -36,10 +35,20 @@ angular.module('starter', ['uiGmapgoogle-maps','ionic', 'starter.controllers', '
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/tabs.html',
+    resolve: {
+      cache: 'cache'
+
+
+      /* function(cache) {
+        console.log(cache);
+        return cache;
+      }
+      */
+    }
   })
 
   // Each tab has its own nav history stack:
@@ -49,7 +58,7 @@ angular.module('starter', ['uiGmapgoogle-maps','ionic', 'starter.controllers', '
     views: {
       'tab-dash': {
         templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+        controller: 'DashCtrl as viewModel'
       }
     }
   })
@@ -59,13 +68,33 @@ angular.module('starter', ['uiGmapgoogle-maps','ionic', 'starter.controllers', '
       views: {
         'tab-map': {
           templateUrl: 'templates/tab-map.html',
-          controller: 'CacheCtrl'
+          controller: 'MapCtrl as viewModel'
         }
       }
-    });
+    })
 
+  .state('tab.cache', {
+      url: '/cache',
+      views: {
+        'tab-cache': {
+          templateUrl: 'templates/tab-cache.html',
+          controller: 'CacheCtrl as viewModel'
+        }
+      }
+    })
+
+  .state('tab.detail', {
+      url: '/cache/:cacheId',
+      views: {
+        'tab-cache': {
+          templateUrl: 'templates/cache-detail.html',
+          controller: 'CachedetailCtrl as viewModel'
+        }
+      }
+    })
+  ;
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  //$urlRouterProvider.otherwise('/tab/dash');
 
 })
 
