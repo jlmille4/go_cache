@@ -8,10 +8,15 @@
  * Controller of the goCacheApp
  */
 angular.module('goCacheApp')
-  .controller('CachedetailCtrl', function ($stateParams, cache) {
+  .controller('CachedetailCtrl', function ($stateParams, cacheService) {
     var viewModel = this;
-   	var cacheId = $stateParams.cacheId;
-   	
-   	viewModel.cache = cache.getCache(cacheId);
+
+    var cache = cacheService.getById($stateParams.cacheId);
+  	
+    console.log(cache);
+
+    viewModel.cache = cache;
+
+    viewModel.find = cacheService.find;
 
   });

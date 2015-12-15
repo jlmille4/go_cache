@@ -8,13 +8,38 @@
  * Controller of the goCacheApp
  */
 angular.module('goCacheApp')
-  .controller('DashCtrl', function (cache) {
+  .controller('DashCtrl', function ($scope, cacheService, $timeout) {
   	var viewModel = this;
 
-    //looky looky
-    viewModel.activity  =     cache.getActivity();
-    viewModel.completed =     cache.getCompleted();
-    viewModel.total     =     cache.getCount(); 
-    viewModel.updated   =     cache.getUpdated();  
+    viewModel.caches = [];
+    viewModel.found = [];
 
-  });
+    viewModel.updated = cacheService.updated;
+
+    var updateFound = function(found) {
+      viewModel.found = found;
+    };
+
+    var updateCache = function(caches) {
+      viewModel.caches = caches;
+    };
+
+
+    viewModel.find = function(id) {
+      cacheService
+        .find(id)
+        .then(updateFound);
+    };
+
+    cacheService
+      .getActive()
+      .then( updateCache );
+
+
+    cacheService
+      .getFound()
+      .then( updateFound );
+
+   
+
+ });

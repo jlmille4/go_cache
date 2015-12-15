@@ -31,6 +31,7 @@
     <script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -40,14 +41,13 @@
     <!-- your app's js -->
     <!-- build:js scripts/scripts.js -->
     <script src="scripts/app.js"></script>
-    <script src="scripts/controllers.js"></script>
-    <script src="scripts/services.js"></script>
     <script src="scripts/configuration.js"></script>
     <script src="scripts/controllers/cachedetail.js"></script>
     <script src="scripts/controllers/cache.js"></script>
     <script src="scripts/controllers/map.js"></script>
-    <script src="scripts/services/cache.js"></script>
     <script src="scripts/controllers/dash.js"></script>
+    <script src="scripts/services/cacheservice.js"></script>
+    <script src="scripts/services/seedservice.js"></script>
     <!-- endbuild -->
   </head>
   <body ng-app="goCacheApp">

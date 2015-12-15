@@ -1,14 +1,13 @@
-// Ionic Starter App
+'use strict';
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('goCacheApp', ['uiGmapgoogle-maps','ionic', 'ngRoute'])
+angular.module('goCacheApp', ['uiGmapgoogle-maps','ionic', 'ngRoute', 'LocalStorageModule' ])
 
 .run(function($ionicPlatform) {
-  'use strict';
 
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -26,7 +25,6 @@ angular.module('goCacheApp', ['uiGmapgoogle-maps','ionic', 'ngRoute'])
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
-  'use strict';
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -38,10 +36,12 @@ angular.module('goCacheApp', ['uiGmapgoogle-maps','ionic', 'ngRoute'])
   .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html',
+    templateUrl: 'templates/tabs.html',  
+  
     resolve: {
-      cache: 'cache'
+      seedService: 'seedService'
     }
+    
   })
 
   // Each tab has its own nav history stack:
@@ -84,6 +84,18 @@ angular.module('goCacheApp', ['uiGmapgoogle-maps','ionic', 'ngRoute'])
         }
       }
     })
+
+/*
+  .state('tab.discover', {
+      url: '/discover/:cacheId',
+      views: {
+        'tab-discover': {
+          templateUrl: 'templates/discover.html',
+          controller: 'CachedetailCtrl as viewModel'
+        }
+      }
+    })
+*/
   ;
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/dash');
@@ -91,13 +103,17 @@ angular.module('goCacheApp', ['uiGmapgoogle-maps','ionic', 'ngRoute'])
 })
 
 .config(function(uiGmapGoogleMapApiProvider) {
-    'use strict';
     uiGmapGoogleMapApiProvider.configure({
         //    key: 'your api key',
         v: '3.20', //defaults to latest 3.X anyhow
         libraries: 'weather,geometry,visualization'
     });
 })
+
+.config(['localStorageServiceProvider', function(localStorageServiceProvider){
+  localStorageServiceProvider.setPrefix('goCacheApp');
+}])
+
 ;
 
 

@@ -8,7 +8,7 @@
  * Controller of the goCacheApp
  */
 angular.module('goCacheApp')
-  .controller('MapCtrl', function (cache) {
+  .controller('MapCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

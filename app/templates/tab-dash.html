@@ -1,18 +1,18 @@
 <ion-view view-title="Dashboard">
   <ion-content>
     <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
+      <div class="item item-divider">Report</div>
       <div class="item item-body">
         <div>
-          You have completed <b>{{viewModel.completed}}</b> out of <b>{{viewModel.total}}</b>
+          You have completed <b>{{viewModel.found.length}}</b> out of <b>{{viewModel.caches.length }}</b>
         </div>
       </div>
     </div>
-    <div class="list card">
-      <div class="item item-divider">Health</div>
-      <div class="item item-body">
+    <div class="list card"  ng-if="viewModel.found.length > 0">
+      <div class="item item-divider">Latest</div>
+      <div class="item item-body" ng-repeat="cache in viewModel.found | orderBy: '+cache.found.date' | limitTo: 5 ">
         <div>
-          You ate an apple today!
+          You  found <b>{{cache.title}}</b> on <b>{{cache.found.date | date :"MM/dd/yyyy 'at' h:mma"}} </b> 
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
       <div class="item item-divider">Updated</div>
       <div class="item item-body">
         <div>
-          Your caches were last updated <b>{{viewModel.updated | date :"MM/dd/yyyy 'at' h:mma"}}</b>
+          Your caches were last updated <b>{{viewModel.updated.date | date :"MM/dd/yyyy 'at' h:mma"}}</b>
         </div>
       </div>
     </div>

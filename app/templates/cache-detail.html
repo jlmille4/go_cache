@@ -11,19 +11,13 @@
         			{{viewModel.cache.description}}
                 </p>
                 <p>
-                    <a href="#" class="subdued">1 Like</a>
-                    <a href="#" class="subdued">5 Comments</a>
+                    <a href="#" ng-show="viewModel.cache.found" class="subdued"> found: {{viewModel.cache.found.date | date : format : timezone}}</a>
+                    <a href="#" ng-hide="viewModel.cache.found" class="subdued">distance {{viewModel.distance}}</a>
                 </p>
             </div>
             <div class="item tabs tabs-secondary tabs-icon-left">
-                <a class="tab-item" href="#">
-                    <i class="icon ion-thumbsup"></i> Like
-                </a>
-                <a class="tab-item" href="#">
-                    <i class="icon ion-chatbox"></i> Comment
-                </a>
-                <a class="tab-item" href="#">
-                    <i class="icon ion-share"></i> Share
+                <a class="tab-item" href="#" ng-click="viewModel.find(viewModel.cache)">
+                    <i class="icon ion-flag"></i> find it!
                 </a>
             </div>
         </div>
