@@ -37,9 +37,7 @@ angular.module('goCacheApp')
             }
 
             var gPosition = createLatLng(cache.location);
-
             color = color === undefined ? 'red' : color;
-
             googleMap.addMarker({
                 'position': gPosition,
                 'title': cache.title,
@@ -64,27 +62,18 @@ angular.module('goCacheApp')
             if (marker === undefined) {
                 throw 'Marker with id ' + cache.id + ' not found';
             }
-
             marker.remove();
-
             addMarker(cache, color);
         };
 
         var initializeMap = function (map) {
             googleMap = map;
-
-            console.log('initializeMap');
-
             var gPosition = createLatLng(startPosition);
-
-            console.log('about to animate map');
             googleMap.animateCamera({
                 'target': gPosition,
                 'zoom': 13,
-                'duration': 3000 // 1 seconds
+                'duration': 3000 // 3 seconds
             });
-
-            console.log('called animation');
             isInitialized = true;
 
             //add queued markers.
@@ -97,7 +86,6 @@ angular.module('goCacheApp')
                 throw 'map is not defined.';
             }
 
-            console.log('initializing google maps...');
             map.on(plugin.google.maps.event.MAP_READY,
                 initializeMap);
         };
