@@ -1,4 +1,4 @@
-'use strict';
+/*global angular, console*/
 
 /**
  * @ngdoc service
@@ -8,56 +8,67 @@
  * Service in the goCacheApp.
  */
 angular.module('goCacheApp')
-  .service('seedService', function ($http, $q, localStorageService) {
-    var self = this;
+    .service('seedService', function ($http, $q, localStorageService) {
+        'use strict';
+        var self = this,
+            seed;
 
-  	var doSeed = function(resolve, response) {
-      injectCompleted(response.data);
-  		localStorageService.set('seeded', { date: Date.now() } );
-  		localStorageService.set('actives', response.data);
-  		resolve(self);
-  	};
+        //possible make this into it's own
+        //middleware service
+        function injectCompleted(actives) {
+            var found = localStorageService.get('found');
+            if (found === null) {
+                return;
+            }
 
-  	var doFailed = function(reject, error) {
-  		reject(error);
-  	};
+            //ugh maybe something cleaner idk
+            angular.forEach(actives, function (cache) {
+                angular.forEach(found, function (fnd) {
+                    if (fnd.id === cache.id) {
+                        cache.found = {
+                            date: fnd.date
+                        };
+                    }
+                });
+            });
+        }
 
-    //TODO: possible make this into it's own
-    //middleware service
-    var injectCompleted = function(actives) {
-      var found = localStorageService.get('found');
-      if(found === null) {
-        return;
-      }
+        function doSeed(resolve, response) {
+            injectCompleted(response.data);
+            localStorageService.set('seeded', {
+                date: Date.now()
+            });
+            localStorageService.set('actives', response.data);
+            resolve(self);
+        }
 
-      //ugh maybe something cleaner idk
-      angular.forEach(actives, function(cache) {
-        angular.forEach(found, function(fnd) {
-          if(fnd.id === cache.id){
-            cache.found = {date: fnd.date};
-          }
+        function doFailed(reject, error) {
+            reject(error);
+        }
+
+
+
+        function isSeeded() {
+            var seeded = localStorageService.get('seeded');
+            return !(seeded === null || angular.isUndefined(seeded));
+        }
+
+        seed = $q(function (resolve, reject) {
+            var resolvedDoSeed, rejectedDoFailed;
+            if (isSeeded()) {
+                resolve(this);
+            } else {
+                resolvedDoSeed = doSeed.bind(self, resolve);
+                rejectedDoFailed = doFailed.bind(self, reject);
+                $http.get('resources/caches.1.json').then(
+                    resolvedDoSeed,
+                    rejectedDoFailed
+                );
+            }
         });
-      });
-    };
 
-  	var isSeeded = function() {
-  		var seeded = localStorageService.get('seeded');
-      return !(seeded === null || angular.isUndefined(seeded));
-  	};
+        self.isSeeded = isSeeded;
 
-	 var seed = $q(function(resolve, reject) {
-    if(isSeeded()) {
-   		resolve(this);
-		}
-		else {
-			var resolvedDoSeed = doSeed.bind(self, resolve);
-			var rejectedDoFailed = doFailed.bind(self, reject);
-			$http.get('resources/caches.1.json').then(resolvedDoSeed, rejectedDoFailed);
-		}
-	 });
+        return seed;
 
-   self.isSeeded = isSeeded;
-  
-  return seed;
-
-});
+    });

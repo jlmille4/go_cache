@@ -1,4 +1,4 @@
-'use strict';
+/*global angular*/
 
 /**
  * @ngdoc function
@@ -8,24 +8,8 @@
  * Controller of the goCacheApp
  */
 angular.module('goCacheApp')
-  .controller('CacheCtrl', function ($scope, cacheService, $timeout) {
-  	var viewModel = this;
-
-  	viewModel.caches = [];
-
-    var updateCaches = function(caches) {
-
-      viewModel.caches = caches;
-    };
-
-    cacheService
-      .getActive()
-      .then( updateCaches );
-
-   $timeout(function() {
-      cacheService
-        .find(0)
-        .then(updateCaches);
-    }, 5000);
-
-  });
+    .controller('CacheCtrl', function (caches) {
+        'use strict';
+        var viewModel = this;
+        viewModel.caches = caches;
+    });

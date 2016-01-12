@@ -1,5 +1,4 @@
-'use strict';
-
+/*global angular*/
 /**
  * @ngdoc function
  * @name goCacheApp.controller:CachedetailCtrl
@@ -8,15 +7,10 @@
  * Controller of the goCacheApp
  */
 angular.module('goCacheApp')
-  .controller('CachedetailCtrl', function ($stateParams, cacheService) {
-    var viewModel = this;
+    .controller('CachedetailCtrl', function (cache) {
+        'use strict';
 
-    var cache = cacheService.getById($stateParams.cacheId);
-  	
-    console.log(cache);
+        var viewModel = this;
 
-    viewModel.cache = cache;
-
-    viewModel.find = cacheService.find;
-
-  });
+        viewModel.cache = cache;
+    });

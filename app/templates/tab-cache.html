@@ -7,7 +7,10 @@
   		</div>
   		-->
   		<a class="item" ng-repeat-end ng-repeat="cache in viewModel.caches" href="#/tab/cache/{{cache.id}}">
-  			{{cache.title}}
+  			<h2>{{cache.title}}</h2>
+  			
+  			<p>{{cache.completed.date | date:'MM/dd/yyyy @ h:mma'}}</p>
+  			<span class="badge badge-assertive"><1m</span>
   		</a>
 	</div>
 	</ion-content>

@@ -1,4 +1,4 @@
-'use strict';
+/*global angular, console*/
 
 /**
  * @ngdoc service
@@ -7,62 +7,33 @@
  * # cache
  * Service in the goCacheApp.
  */
-angular.module('goCacheApp')
-  .service('cacheService', function (localStorageService, $q) {
-    var self = this;
+var app = angular.module('goCacheApp');
+app.service('cacheService', function ($http, $q, $timeout) {
+    'use strict';
+    var self = this,
+        initialize;
+    self.caches = [];
 
-    //list of active caches
-    var actives = localStorageService.get('actives') || [];
-    
-    //list of inactive caches
-    var found = localStorageService.get('found') || [];
+    function handleResponse(resolve, response) {
+        self.caches = response.data;
+        resolve(self.caches);
+    }
 
-    var updated = localStorageService.get('seeded') || Date.now();
+    function handleError(reject, error) {
+        reject(error);
+    }
 
-    var find = function(id) {
-        if(isFound(id)) {
-            throw 'cache: ' + id + ' is already found';
-        }
+    initialize = $q(function (resolve, reject) {
+        var resolvedHandleResponse, rejectedHandleError;
 
-        console.log(id);
-        var cache = getById(id);        
+        resolvedHandleResponse = handleResponse.bind(self,
+            resolve);
+        rejectedHandleError = handleError.bind(self, reject);
+        $http.get('resources/caches.1.json').then(
+            resolvedHandleResponse,
+            rejectedHandleError
+        );
+    });
 
-        cache.found = { date: Date.now() };
-        found.push(cache);
-
-        actives = _.filter(actives, function(c) {
-            return c.id !== cache.id;
-        });
-
-        return( $q.when( actives ) );
-    };
-
-    var isFound = function(id) {
-        var f = _.find(found, function(cache){
-            return cache.id === id;
-        });
-        return (angular.isDefined(f));
-    };
-
-    var getById = function(id) {
-        return _.find(actives, function(cache) {
-            return cache.id === id;
-        });
-    };
-
-    var getFound = function() {
-        return ( $q.when(found) );
-    };
-
-    var getCaches = function() {
-        return ( $q.when(actives) );
-    };
-
-
-    return {
-        getActive: getCaches,
-        getFound: getFound,
-        find: find,
-        updated: updated
-    };
-  });
+    return initialize;
+});

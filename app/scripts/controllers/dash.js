@@ -1,4 +1,4 @@
-'use strict';
+/*global angular, _ */
 
 /**
  * @ngdoc function
@@ -8,38 +8,16 @@
  * Controller of the goCacheApp
  */
 angular.module('goCacheApp')
-  .controller('DashCtrl', function ($scope, cacheService, $timeout) {
-  	var viewModel = this;
-
-    viewModel.caches = [];
-    viewModel.found = [];
-
-    viewModel.updated = cacheService.updated;
-
-    var updateFound = function(found) {
-      viewModel.found = found;
-    };
-
-    var updateCache = function(caches) {
-      viewModel.caches = caches;
-    };
+    .controller('DashCtrl', function (caches) {
+        'use strict';
+        var viewModel = this;
+        viewModel.caches = caches;
 
 
-    viewModel.find = function(id) {
-      cacheService
-        .find(id)
-        .then(updateFound);
-    };
-
-    cacheService
-      .getActive()
-      .then( updateCache );
-
-
-    cacheService
-      .getFound()
-      .then( updateFound );
-
-   
-
- });
+        viewModel.getFoundCount = function () {
+            var found = _.filter(viewModel.caches, function (cache) {
+                return angular.isDefined(cache.completed);
+            });
+            return found.length;
+        };
+    });
