@@ -55,7 +55,7 @@ angular.module('goCacheApp')
             });
         };
 
-        var updateMarkerColor = function (cache) {
+        var updateMarkerColor = function (cache, color) {
             if (!isInitialized) {
                 return;
             }
@@ -67,7 +67,7 @@ angular.module('goCacheApp')
 
             marker.remove();
 
-            addMarker(cache, 'blue');
+            addMarker(cache, color);
         };
 
         var initializeMap = function (map) {

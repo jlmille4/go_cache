@@ -9,9 +9,9 @@
  */
 angular.module('goCacheApp')
     .controller('MapCtrl', ['$ionicPlatform', 'MapService', 'caches',
-        '$timeout',
+        '$interval',
         function (
-            $ionicPlatform, MapService, caches, $timeout) {
+            $ionicPlatform, MapService, caches, $interval) {
             $ionicPlatform.ready(function () {
 
                 if (plugin === undefined) {
@@ -38,10 +38,13 @@ angular.module('goCacheApp')
                     return Number(cache.id) === 0;
                 });
 
-                $timeout(function () {
+                var color = 'red';
+                $interval(function () {
+                    color = (color === 'red') ? 'blue' :
+                        'red';
                     MapService.updateMarkerColor(
-                        cacheToChange);
-                }, 5000);
+                        cacheToChange, color);
+                }, 10000);
 
             });
 
